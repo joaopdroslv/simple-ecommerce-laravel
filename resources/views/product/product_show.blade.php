@@ -14,6 +14,7 @@
         </div>
         <div class="col-md-6">
             <h3 class="mt-5">CATEGORY | {{ $product->category->name }}</h3>
+            <h3 class="mt-4">BRAND | {{ $product->brand }}</h3>
             <p class="mt-4">{{ $product->description }}</p>
             <small class="text-body-secondary">
                 Last updated {{ $product->updated_at->diffForHumans() }}
