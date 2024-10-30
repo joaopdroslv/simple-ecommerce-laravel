@@ -52,7 +52,7 @@
                         <a href="{{ route('products.byCategoryId', ['id' => $category->id]) }}"
                             class="btn btn-primary d-flex justify-content-center">
                             <i class="material-icons me-2">add</i>
-                            See more
+                            see more
                         </a>
                     </div>
                 </div>

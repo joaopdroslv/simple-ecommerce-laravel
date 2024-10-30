@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function getAllProducts()
+    public function getAll()
     {
-        $products = Product::all();
-        return view('product/products', ['products' => $products]);
+        $products = Product::paginate(40);
+        return view('product/final-user/products', ['products' => $products]);
     }
 
-    public function getProductsByCategoryId(string $categoryId)
+    public function getByCategoryId(string $categoryId)
     {
         $category = Category::where('id', $categoryId)->first();
-        $products = Product::where('category_id', $categoryId)->get();
-        return view('product/products', ['products' => $products, 'category' => $category]);
+        $products = Product::where('category_id', $categoryId)->paginate(40);
+        return view('product/final-user/products', ['products' => $products, 'category' => $category]);
     }
 
-    public function getProductsByFilter(Request $request)
+    public function getByFilter(Request $request)
     {
         $productName = $request->input('product_name');
         $sortOrder = $request->input('sort_order');
@@ -42,9 +42,14 @@ class ProductController extends Controller
         }
 
         $category = Category::where('id', $categoryId)->first();
-        $products = $query->get();
+        $products = $query->paginate(40);
 
-        return view('product/products', ['products' => $products, 'category' => $category]);
+        return view('product/final-user/products', ['products' => $products, 'category' => $category]);
+    }
+
+    public function detail(Product $product)
+    {
+        return view('product/final-user/product_show', ['product' => $product]);
     }
 
     public function index()
@@ -52,8 +57,33 @@ class ProductController extends Controller
 
     }
 
-    public function show(Product $product)
+    public function create()
     {
-        return view('product/product_show', ['product' => $product]);
+
+    }
+
+    public function store()
+    {
+
+    }
+
+    public function show()
+    {
+
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function destroy()
+    {
+
     }
 }

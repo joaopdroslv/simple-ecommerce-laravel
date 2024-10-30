@@ -16,7 +16,7 @@
 
     <hr class="mt-4">
     <div class="mt-5 d-flex justify-content-center">
-        <form action="{{ route('products.filter') }}" method="GET" class="w-75">
+        <form action="{{ route('products.byFilter') }}" method="GET" class="w-75">
             @csrf
 
             @if(!empty($category))
@@ -25,26 +25,31 @@
 
             <div class="input-group">
                 <input type="text" name="product_name" class="form-control form-control-lg"
-                    value="{{ request()->input('product_name') }}" placeholder="Search by name...">
+                    value="{{ request()->input('product_name') }}" placeholder="Search in products...">
                 <select name="sort_order" class="form-select form-select-lg ms-4">
                     <option value="" {{ request()->input('sort_order') === '' ? 'selected' : '' }}>
-                        By price
+                        sort by
                     </option>
                     <option value="asc" {{ request()->input('sort_order') === 'asc' ? 'selected' : '' }}>
-                        Price low to high
+                        price: low to high
                     </option>
                     <option value="desc" {{ request()->input('sort_order') === 'desc' ? 'selected' : '' }}>
-                        Price high to low
+                        price: high to low
                     </option>
                 </select>
             </div>
             <div class="d-flex justify-content-end mt-3">
                 <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center w-25">
-                    <i class="material-icons me-2">search</i> Search
+                    <i class="material-icons me-2">search</i> search
                 </button>
             </div>
         </form>
     </div>
+
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
+    @endif
+
     <div class="row mt-5">
         @foreach ($products as $product)
             <div class="col-md-6 mb-3">
@@ -68,16 +73,19 @@
                                     </small>
                                 </p>
                                 <h4>${{ number_format($product->price, 2) }}</h4>
-                                <div class="d-flex gap-2 ms-auto mt-4 w-75" style="width: fit-content;">
-                                    <a href="{{ route('products.show', ['product' => $product->id]) }}"
-                                        class="btn btn-primary w-50 h-100">
-                                        See more
+                                <div class="w-100 d-flex align-items-center justify-content-end mt-4">
+                                    <a href="{{ route('products.detail', ['product' => $product->id]) }}"
+                                        class="btn btn-primary ms-2">
+                                        see more
                                     </a>
-                                    <a href=""
-                                        class="btn btn-success d-flex align-items-center justify-content-center w-50 h-100">
-                                        <i class="material-icons me-1">add_shopping_cart</i>
-                                        Add to cart
-                                    </a>
+                                    <form action="{{ route('carts.store', ['product' => $product->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="btn btn-success d-flex align-items-center justify-content-center ms-2">
+                                            <i class="material-icons me-3">add_shopping_cart</i>
+                                            add to cart
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -86,6 +94,17 @@
             </div>
         @endforeach
     </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    {{--
+    -> 'request()->query()' returns all parameters of the current request,
+    including the filters you applied (such as 'product_name', 'sort_order', and 'category_id').
+
+    -> The 'appends()' method ensures that these settings are maintained
+    across pagination URLs, allowing the user to navigate pages without losing applied filters.
+    --}}
+    {{ $products->appends(request()->query())->links('components/pagination') }}
 </div>
 
 @endsection
