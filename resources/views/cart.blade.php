@@ -32,6 +32,7 @@
                                 <div class="col-md-2">
                                     <p class="card-text fs-6">UNIT PRICE ${{ number_format($cartItem->price, 2) }}</p>
                                     <p class="card-text fs-6">QUANTITY {{ $cartItem->quantity }}</p>
+                                    <p class="card-text fs-6">SUBTOTAL {{ $cartItem->subTotal() }}</p>
                                 </div>
                                 <div class="col-md-10 d-flex justify-content-end align-items-center">
                                     <a href="" class="btn btn-primary ms-2">add one</a>

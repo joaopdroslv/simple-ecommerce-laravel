@@ -78,7 +78,8 @@
                                         class="btn btn-primary ms-2">
                                         see more
                                     </a>
-                                    <form action="{{ route('carts.store', ['product' => $product->id]) }}" method="POST">
+                                    <form action="{{ route('carts.addToCart', ['product' => $product->id]) }}"
+                                        method="POST">
                                         @csrf
                                         <button type="submit"
                                             class="btn btn-success d-flex align-items-center justify-content-center ms-2">

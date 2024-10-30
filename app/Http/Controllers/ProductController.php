@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -49,7 +50,11 @@ class ProductController extends Controller
 
     public function detail(Product $product)
     {
-        return view('product/final-user/product_show', ['product' => $product]);
+        $user = auth()->user();
+        $cart = Cart::getActiveCartForUser($user->id);
+        $productAlreadyInCart = $cart ? $cart->hasProduct($product->id) : 0; // Verifica se o carrinho existe
+
+        return view('product/final-user/product_show', ['product' => $product, 'productAlreadyInCart' => $productAlreadyInCart]);
     }
 
     public function index()

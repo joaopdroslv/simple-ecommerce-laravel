@@ -7,7 +7,13 @@
 <div class="container">
     <h1 class="mt-5">PRODUCT | {{ $product->name }}</h1>
     <hr class="mt-4">
-    {{-- Warn user if the item already exists in his shopping cart --}}
+
+    @if ($productAlreadyInCart)
+        <div class="alert alert-warning mb-4 mt-4 fs-5">
+            You already have [{{ $productAlreadyInCart }}] of this product in your shopping cart.
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-6">
             <img src="{{ asset('assets/imgs/placeholder-product-image.jpg') }}" class="img-fluid rounded-start"
@@ -21,7 +27,7 @@
                 Last updated {{ $product->updated_at->diffForHumans() }}
             </small>
             <h2 class="mt-4">${{ number_format($product->price, 2) }}</h2>
-            <form action="{{ route('carts.store', ['product' => $product->id]) }}" method="POST" class="d-inline">
+            <form action="{{ route('carts.addToCart', ['product' => $product->id]) }}" method="POST" class="d-inline">
                 @csrf
                 <button type="submit"
                     class="btn btn-success d-flex align-items-center justify-content-center w-25 mt-4">
@@ -31,7 +37,7 @@
             </form>
 
             @if (session()->has('success'))
-                <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
+                <div class="alert alert-success mb-4 mt-4 fs-5">{{ session()->get('success') }}</div>
             @endif
 
         </div>

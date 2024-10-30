@@ -31,6 +31,17 @@ class Cart extends Model
         return $this->hasMany(CartItem::class);
     }
 
+    public static function getActiveCartForUser(string $userId)
+    {
+        return self::where('user_id', $userId)->where('is_active', true)->first() ?? null;
+    }
+
+    public function hasProduct(string $productId)
+    {
+        $cartItem = $this->items()->where('product_id', $productId)->first();
+        return $cartItem ? $cartItem->quantity : 0;
+    }
+
     public function cartTotal()
     {
         return $this->items()->get()->sum(function (CartItem $item): float {

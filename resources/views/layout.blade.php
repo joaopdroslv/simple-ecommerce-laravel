@@ -60,7 +60,7 @@
                     @if (Auth::user()->user_type === 'final_user')
 
                         <li class="nav-item">
-                            <a class="nav-link fs-5" href="{{ route('carts.index') }}">my shopping cart</a>
+                            <a class="nav-link fs-5" href="{{ route('carts.showCart') }}">shopping cart</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown"

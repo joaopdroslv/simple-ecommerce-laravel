@@ -23,5 +23,5 @@ Route::get('/products/{product}/detail', [ProductController::class, 'detail'])->
 
 Route::resource('products', ProductController::class)->middleware('auth');
 
-Route::get('/carts', [CartController::class, 'index'])->middleware('auth')->name('carts.index');
-Route::post('/carts/{product}', [CartController::class, 'store'])->middleware('auth')->name('carts.store');
+Route::get('/shopping-cart', [CartController::class, 'showCart'])->middleware('auth')->name('carts.showCart');
+Route::post('/shopping-cart/add/{product}', [CartController::class, 'addToCart'])->middleware('auth')->name('carts.addToCart');

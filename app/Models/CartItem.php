@@ -32,4 +32,9 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function subTotal()
+    {
+        return $this->quantity * $this->price;
+    }
 }
