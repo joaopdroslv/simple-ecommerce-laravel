@@ -26,9 +26,9 @@ class Cart extends Model
     }
 
     // Relationship with CartItem (a cart has many items)
-    public function items()
+    public function products()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(CartProduct::class);
     }
 
     public static function getActiveCartForUser(string $userId)
@@ -38,13 +38,13 @@ class Cart extends Model
 
     public function hasProduct(string $productId)
     {
-        $cartItem = $this->items()->where('product_id', $productId)->first();
-        return $cartItem ? $cartItem->quantity : 0;
+        $cartProduct = $this->products()->where('product_id', $productId)->first();
+        return $cartProduct ? $cartProduct->quantity : 0;
     }
 
     public function cartTotal()
     {
-        return $this->items()->get()->sum(function (CartItem $item): float {
+        return $this->products()->get()->sum(function (CartProduct $item): float {
             return $item->price * $item->quantity;
         });
     }

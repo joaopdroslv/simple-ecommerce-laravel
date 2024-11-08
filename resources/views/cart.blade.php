@@ -5,47 +5,108 @@
 @section('content')
 
 <div class="container">
-    <h1 class="mt-5">Products in my shopping cart</h1>
+    <h1 class="mt-5">
+        <i class="material-icons">shopping_cart</i>
+        Products in my shopping cart
+    </h1>
     <hr class="mt-4">
-    <div class="row d-flex align-items-center mt-5">
-        <div class="col-md-6">
-            <h2>Your total is ${{ number_format($cartTotal, 2) }}</h2>
+
+    @if (!$cartProducts->isEmpty())
+        <div class="mt-4 d-flex justify-content-end">
+            <form action="{{ route('carts.clear') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-danger d-flex align-items-center justify-content-center">
+                    <i class="material-icons me-2">delete</i>
+                    CLEAR MY SHOPPING CART
+                </button>
+            </form>
         </div>
-        <div class="col-md-6 d-flex justify-content-end">
-            <a href="" class="btn btn-success ms-2">CHECKOUT</a>
-            <a href="" class="btn btn-danger ms-2">CLEAR MY SHOPPPING CART</a>
-        </div>
-    </div>
-    <div class="mt-5">
-        @foreach ($cartItems as $cartItem)
-            <div class="card mb-3 w-100">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/imgs/placeholder-product-image.jpg') }}" class="img-fluid rounded-start"
-                            alt="...">
+
+        <div class="mt-4 row d-flex justify-content-start">
+            <div class="col-md-7">
+                @foreach ($cartProducts as $cartProduct)
+                    <div class="card mb-3">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{ asset('assets/imgs/placeholder-product-image.jpg') }}"
+                                    class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ Str::limit($cartProduct->product->name, 60) }}</h4>
+                                    <hr>
+
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <p class="card-text fs-6">unity price ${{ number_format($cartProduct->price, 2) }}
+                                            </p>
+                                            <p class="card-text fs-6">quantity {{ $cartProduct->quantity }}</p>
+                                            <p class="card-text fs-6">subtotal ${{ number_format($cartProduct->subTotal(), 2) }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 d-flex justify-content-end align-items-center">
+                                            <form action="{{ route('carts.addOne', ['product' => $cartProduct->product->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="btn btn-primary ms-2 d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 100px;">
+                                                    <i class="material-icons">add</i>
+                                                </button>
+                                            </form>
+                                            <form
+                                                action="{{ route('carts.removeOne', ['product' => $cartProduct->product->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="btn btn-primary ms-2 d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 100px;">
+                                                    <i class="material-icons">remove</i>
+                                                </button>
+                                            </form>
+                                            <form
+                                                action="{{ route('carts.removeAll', ['product' => $cartProduct->product->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="btn btn-danger ms-2 d-flex align-items-center justify-content-center"
+                                                    style="border-radius: 100px;">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ Str::limit($cartItem->product->name, 60) }}</h4>
-                            <hr>
+                @endforeach
+            </div>
+            <div class="container card col-md-5 d-flex align-items-center justify-content-center" style="height: 300px;">
+                <div class="col-md-10">
+                    <div class="row">
+                        <h4>${{ number_format($cartTotal, 2) }}</h4>
+                    </div>
+                    <small class="text-body-secondary row mt-4">* pay in up to 12 installments by credit card</small>
+                    <small class="text-body-secondary row">* 10% discount for cash payment</small>
+                    <hr class="mt-4">
+                    <div class="row">
+                        <div class="col">
                             <div class="row mt-4">
-                                <div class="col-md-2">
-                                    <p class="card-text fs-6">UNIT PRICE ${{ number_format($cartItem->price, 2) }}</p>
-                                    <p class="card-text fs-6">QUANTITY {{ $cartItem->quantity }}</p>
-                                    <p class="card-text fs-6">SUBTOTAL {{ $cartItem->subTotal() }}</p>
-                                </div>
-                                <div class="col-md-10 d-flex justify-content-end align-items-center">
-                                    <a href="" class="btn btn-primary ms-2">add one</a>
-                                    <a href="" class="btn btn-primary ms-2">remove one</a>
-                                    <a href="" class="btn btn-danger ms-2">remove all</a>
-                                </div>
+                                <a href="" class="btn btn-success d-flex align-items-center justify-content-center">
+                                    <i class="material-icons me-2">shopping_cart_checkout</i>
+                                    CHECKOUT</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @else
+        <div class="alert alert-warning mt-5">
+            Your shopping cart is empty, try adding something! <a href="{{ route('products.getAll') }}">go to products</a>
+        </div>
+    @endif
 </div>
 
 @endsection

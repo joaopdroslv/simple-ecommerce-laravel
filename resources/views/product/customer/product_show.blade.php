@@ -14,6 +14,10 @@
         </div>
     @endif
 
+    @error('error')
+        <div class="alert alert-danger mt-5">{{ $message }}</div>
+    @enderror
+
     <div class="row">
         <div class="col-md-6">
             <img src="{{ asset('assets/imgs/placeholder-product-image.jpg') }}" class="img-fluid rounded-start"
@@ -26,8 +30,18 @@
             <small class="text-body-secondary">
                 Last updated {{ $product->updated_at->diffForHumans() }}
             </small>
-            <h2 class="mt-4">${{ number_format($product->price, 2) }}</h2>
-            <form action="{{ route('carts.addToCart', ['product' => $product->id]) }}" method="POST" class="d-inline">
+
+            <div class="stars mt-5 d-flex align-items-center">
+                Users rated it
+                <div class="ms-3">
+                    @for ($i = 1; $i <= $product->averageRating(); $i++)
+                        <i class="material-icons text-warning">star_rate</i>
+                    @endfor
+                </div>
+            </div>
+
+            <h2 class="mt-5">${{ number_format($product->price, 2) }}</h2>
+            <form action="{{ route('carts.addOne', ['product' => $product->id]) }}" method="POST" class="d-inline">
                 @csrf
                 <button type="submit"
                     class="btn btn-success d-flex align-items-center justify-content-center w-25 mt-4">
@@ -41,9 +55,11 @@
             @endif
 
         </div>
+
         <hr class="mt-4">
+
         <div class="row mt-4 mb-5">
-            <h2 class="mt-4">Specifications</h2>
+            <h2 class="mt-4">Specifications / Description</h2>
             <p class="mt-4">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam corrupti et numquam sit facilis
                 deserunt eius dolorum laudantium laborum doloremque eos minima expedita, quaerat unde? Similique, quis.
@@ -60,6 +76,38 @@
                 eveniet obcaecati praesentium aspernatur sed vitae doloremque porro doloribus distinctio. Obcaecati,
                 quos ab doloremque ipsam numquam quam.
             </p>
+        </div>
+
+        <hr class="mt-4">
+
+        <div class="row mt-4 mb-5">
+            <h2 class="mt-4">Reviews</h2>
+            <div class="mt-4">
+                @if (!$reviews)
+                    <div class="alert alert-warning">Nobody made a review yet. Buy the product so you can be the first!
+                    </div>
+                @else
+                    @foreach ($reviews as $review)
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $review->user->first_name }} {{ $review->user->last_name }}
+                                        </h5>
+                                        <p class="mt-2">at {{$review->created_at->diffForHumans()}}</p>
+                                        <div class="stars mt-2">
+                                            @for ($i = 1; $i <= $review->rating; $i++)
+                                                <i class="material-icons text-warning">star_rate</i>
+                                            @endfor
+                                        </div>
+                                        <p class="card-text mt-2">{{ $review->comment }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
         </div>
     </div>
 </div>

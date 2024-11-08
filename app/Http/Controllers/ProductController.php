@@ -12,14 +12,14 @@ class ProductController extends Controller
     public function getAll()
     {
         $products = Product::paginate(40);
-        return view('product/final-user/products', ['products' => $products]);
+        return view('product/customer/products', ['products' => $products]);
     }
 
     public function getByCategoryId(string $categoryId)
     {
         $category = Category::where('id', $categoryId)->first();
         $products = Product::where('category_id', $categoryId)->paginate(40);
-        return view('product/final-user/products', ['products' => $products, 'category' => $category]);
+        return view('product/customer/products', ['products' => $products, 'category' => $category]);
     }
 
     public function getByFilter(Request $request)
@@ -45,16 +45,17 @@ class ProductController extends Controller
         $category = Category::where('id', $categoryId)->first();
         $products = $query->paginate(40);
 
-        return view('product/final-user/products', ['products' => $products, 'category' => $category]);
+        return view('product/customer/products', ['products' => $products, 'category' => $category]);
     }
 
     public function detail(Product $product)
     {
         $user = auth()->user();
-        $cart = Cart::getActiveCartForUser($user->id);
-        $productAlreadyInCart = $cart ? $cart->hasProduct($product->id) : 0; // Verifica se o carrinho existe
+        $cart = $user ? Cart::getActiveCartForUser($user->id) : null;
+        $productAlreadyInCart = $cart ? $cart->hasProduct($product->id) : 0;  # Product is in the shopping cart?
+        $reviews = $product->reviews()->get();
 
-        return view('product/final-user/product_show', ['product' => $product, 'productAlreadyInCart' => $productAlreadyInCart]);
+        return view('product/customer/product_show', ['product' => $product, 'productAlreadyInCart' => $productAlreadyInCart, 'reviews' => $reviews]);
     }
 
     public function index()

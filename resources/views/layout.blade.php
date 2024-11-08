@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active fs-5" aria-current="page" href="{{ route('home') }}">e-commerce</a>
+                        <a class="nav-link active fs-5" aria-current="page" href="{{ route('home') }}">E-COMMERCE</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active fs-5" aria-current="page"
@@ -57,7 +57,7 @@
                 @endguest
 
                 @auth
-                    @if (Auth::user()->user_type === 'final_user')
+                    @if (Auth::user()->user_type === 'customer')
 
                         <li class="nav-item">
                             <a class="nav-link fs-5" href="{{ route('carts.showCart') }}">shopping cart</a>
@@ -69,13 +69,15 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item fs-5" href="">my orders</a></li>
+                                <li><a class="dropdown-item fs-5" href="">my addresses</a></li>
                                 <li>
                                     <a class="dropdown-item fs-5" href=""
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         logout
                                     </a>
                                 </li>
-                                <form id="logout-form" action="" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('login.destroy') }}" method="GET"
+                                    style="display: none;">
                                     @csrf
                                 </form>
                             </ul>
@@ -98,6 +100,10 @@
                                         logout
                                     </a>
                                 </li>
+                                <form id="logout-form" action="{{ route('login.destroy') }}" method="GET"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             </ul>
                         </li>
 

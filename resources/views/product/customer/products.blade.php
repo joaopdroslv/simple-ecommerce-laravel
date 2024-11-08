@@ -15,6 +15,7 @@
     @endif
 
     <hr class="mt-4">
+
     <div class="mt-5 d-flex justify-content-center">
         <form action="{{ route('products.byFilter') }}" method="GET" class="w-75">
             @csrf
@@ -50,6 +51,10 @@
         <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
     @endif
 
+    @error('error')
+        <div class="alert alert-danger mt-5">{{ $message }}</div>
+    @enderror
+
     <div class="row mt-5">
         @foreach ($products as $product)
             <div class="col-md-6 mb-3">
@@ -78,8 +83,7 @@
                                         class="btn btn-primary ms-2">
                                         see more
                                     </a>
-                                    <form action="{{ route('carts.addToCart', ['product' => $product->id]) }}"
-                                        method="POST">
+                                    <form action="{{ route('carts.addOne', ['product' => $product->id]) }}" method="POST">
                                         @csrf
                                         <button type="submit"
                                             class="btn btn-success d-flex align-items-center justify-content-center ms-2">
