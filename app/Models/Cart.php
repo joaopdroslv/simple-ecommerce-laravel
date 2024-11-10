@@ -31,11 +31,6 @@ class Cart extends Model
         return $this->hasMany(CartProduct::class);
     }
 
-    public static function getActiveCartForUser(string $userId)
-    {
-        return self::where('user_id', $userId)->where('is_active', true)->first() ?? null;
-    }
-
     public function hasProduct(string $productId)
     {
         $cartProduct = $this->products()->where('product_id', $productId)->first();

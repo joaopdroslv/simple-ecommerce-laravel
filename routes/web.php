@@ -21,7 +21,7 @@ Route::get('/products/category/{id}', [ProductController::class, 'getByCategoryI
 Route::get('/products/filter', [ProductController::class, 'getByFilter'])->name('products.byFilter');
 Route::get('/products/{product}/detail', [ProductController::class, 'detail'])->name('products.detail');
 
-Route::resource('products', ProductController::class);
+Route::resource('admin/products', ProductController::class);
 
 Route::get('/shopping-cart', [CartController::class, 'showCart'])->name('carts.showCart');
 Route::post('/shopping-cart/add-one/{product}', [CartController::class, 'addOneToCart'])->name('carts.addOne');

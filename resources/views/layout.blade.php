@@ -92,10 +92,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item fs-5" href="">dashboard</a></li>
-                                <li><a class="dropdown-item fs-5" href="">products</a></li>
+                                <li><a class="dropdown-item fs-5" href="{{ route('products.index') }}">products</a></li>
                                 <li><a class="dropdown-item fs-5" href="">users</a></li>
                                 <li>
-                                    <a class="dropdown-item fs-5" href="{{ route('logout') }}"
+                                    <a class="dropdown-item fs-5" href=""
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         logout
                                     </a>

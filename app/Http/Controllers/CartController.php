@@ -17,7 +17,7 @@ class CartController extends Controller
         }
 
         $user = auth()->user();
-        $cart = Cart::getActiveCartForUser($user->id);
+        $cart = $user->cart();
         $cartProducts = $cart->products()->get();
         $cartTotal = $cart->cartTotal();
 
