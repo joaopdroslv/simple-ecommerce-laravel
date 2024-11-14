@@ -45,19 +45,31 @@ class ProductController extends Controller
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
+        ], [
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name must be a string.',
+            'name.max' => 'The name must not exceed 255 characters.',
+
+            'brand.required' => 'The brand field is required.',
+            'brand.string' => 'The brand must be a string.',
+            'brand.max' => 'The brand must not exceed 255 characters.',
+
+            'description.required' => 'The description field is required.',
+            'description.string' => 'The description must be a string.',
+
+            'price.required' => 'The price field is required.',
+            'price.numeric' => 'The price must be a number.',
+            'price.min' => 'The price must be at least 0.',
+
+            'category_id.required' => 'The category field is required.',
+            'category_id.exists' => 'The selected category does not exist.',
         ]);
 
-        $formatted_price = str_replace(',', '.', $request->input('price'));
-        if ($formatted_price) {
-            return redirect()->back()->with('error', 'Failed to create!');
-        }
-
-        // Ignoring fields validation
         $created = $this->product->create([
             'name' => $request->input('name'),
             'brand' => $request->input('brand'),
             'description' => $request->input('description'),
-            'price' => $formatted_price,
+            'price' => $request->input('price'),
             'category_id' => $request->input('category_id'),
         ]);
 
@@ -89,7 +101,32 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Ignore forms hidden fields
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'brand' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'category_id' => ['required', 'exists:categories,id'],
+        ], [
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name must be a string.',
+            'name.max' => 'The name must not exceed 255 characters.',
+
+            'brand.required' => 'The brand field is required.',
+            'brand.string' => 'The brand must be a string.',
+            'brand.max' => 'The brand must not exceed 255 characters.',
+
+            'description.required' => 'The description field is required.',
+            'description.string' => 'The description must be a string.',
+
+            'price.required' => 'The price field is required.',
+            'price.numeric' => 'The price must be a number.',
+            'price.min' => 'The price must be at least 0.',
+
+            'category_id.required' => 'The category field is required.',
+            'category_id.exists' => 'The selected category does not exist.',
+        ]);
+
         $data = $request->except(['_token', '_method']);
 
         $updated = $this->product->where('id', $id)->update($data);

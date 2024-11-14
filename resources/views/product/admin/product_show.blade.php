@@ -1,8 +1,6 @@
 @extends('layout')
 
-@section('title')
-Product Details
-@endsection
+@section('title') Product Details @endsection
 
 @section('content')
 

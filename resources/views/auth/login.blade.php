@@ -26,7 +26,7 @@
             <hr class="mt-4 mb-5">
             @csrf
 
-            <div class="input-group has-validation">
+            <div class="has-validation">
                 <div class="form-floating">
                     <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
                         value="{{ old('email') }}" placeholder="">
@@ -37,7 +37,7 @@
                 @enderror
             </div>
 
-            <div class="input-group has-validation mt-3">
+            <div class="has-validation mt-3">
                 <div class="form-floating">
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                         value="{{ old('password') }}" placeholder="">

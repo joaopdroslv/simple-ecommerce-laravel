@@ -12,10 +12,6 @@ class CartController extends Controller
 {
     public function showCart()
     {
-        if (!auth()->check()) {
-            return redirect()->back()->withErrors(['error' => 'Must be logged in to see your shopping cart!']);
-        }
-
         $user = auth()->user();
         $cart = $user->cart();
         $cartProducts = $cart->products()->get();
@@ -26,10 +22,6 @@ class CartController extends Controller
 
     public function addOneToCart(Product $product)
     {
-        if (!auth()->check()) {
-            return redirect()->back()->withErrors(['error' => 'Must be logged in to update your shopping cart!']);
-        }
-
         $user = auth()->user();
         $cart = $user->cart();
         $cartProduct = $cart->products()->where('product_id', $product->id)->first();
@@ -46,10 +38,6 @@ class CartController extends Controller
 
     public function removeOneFromCart(Product $product)
     {
-        if (!auth()->check()) {
-            return redirect()->back()->withErrors(['error' => 'Must be logged in to update your shopping cart!']);
-        }
-
         $user = auth()->user();
         $cart = $user->cart();
         $cartProduct = $cart->products()->where('product_id', $product->id)->first();
@@ -71,10 +59,6 @@ class CartController extends Controller
 
     public function removeAllFromCart(Product $product)
     {
-        if (!auth()->check()) {
-            return redirect()->back()->withErrors(['error' => 'Must be logged in to update your shopping cart!']);
-        }
-
         $user = auth()->user();
         $cart = $user->cart();
         $cartProduct = $cart->products()->where('product_id', $product->id)->first();
@@ -88,10 +72,6 @@ class CartController extends Controller
 
     public function clearCart()
     {
-        if (!auth()->check()) {
-            return redirect()->back()->withErrors(['error' => 'Must be logged in to update your shopping cart!']);
-        }
-
         $user = auth()->user();
         $cart = $user->cart();
         $cart->products()->delete();

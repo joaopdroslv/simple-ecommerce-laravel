@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -21,8 +22,14 @@ Route::get('/products/category/{id}', [ProductController::class, 'getByCategoryI
 Route::get('/products/filter', [ProductController::class, 'getByFilter'])->name('products.byFilter');
 Route::get('/products/{product}/detail', [ProductController::class, 'detail'])->name('products.detail');
 
+# Admin access only routes
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 Route::resource('admin/products', ProductController::class);
+Route::resource('admin/users', UserController::class);
 
+# Customer access only routes
 Route::get('/shopping-cart', [CartController::class, 'showCart'])->name('carts.showCart');
 Route::post('/shopping-cart/add-one/{product}', [CartController::class, 'addOneToCart'])->name('carts.addOne');
 Route::post('/shopping-cart/remove-one/{product}', [CartController::class, 'removeOneFromCart'])->name('carts.removeOne');
