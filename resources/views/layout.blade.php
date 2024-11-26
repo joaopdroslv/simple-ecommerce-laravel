@@ -43,6 +43,10 @@
                             @endforeach
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fs-5" aria-current="page" href="{{ route('aboutUs') }}">about
+                            us</a>
+                    </li>
 
 
                 </ul>
@@ -62,7 +66,10 @@
                     @if (Auth::user()->user_type === 'customer')
 
                         <li class="nav-item">
-                            <a class="nav-link fs-5" href="{{ route('carts.showCart') }}">shopping cart</a>
+                            <a class="nav-link fs-5" href="{{ route('carts.showCart') }}">my shopping cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-5" href="{{ route('wishlist.index') }}">my wish list</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown"

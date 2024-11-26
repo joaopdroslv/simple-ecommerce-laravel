@@ -8,6 +8,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        return view('home/home');
+    }
+
+    public function aboutUs()
+    {
+        return view('home/about_us');
     }
 }

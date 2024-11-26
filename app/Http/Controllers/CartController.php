@@ -24,16 +24,16 @@ class CartController extends Controller
     {
         $user = auth()->user();
         $cart = $user->cart();
-        $cartProduct = $cart->products()->where('product_id', $product->id)->first();
 
-        if ($cartProduct) {
-            $cartProduct->quantity += 1;
-            $cartProduct->save();
-            return redirect()->back()->with('success', 'One more added to your shopping cart!');
-        } else {
-            $cart->products()->create(['product_id' => $product->id, 'quantity' => 1, 'price' => $product->price]);
-            return redirect()->back()->with('success', 'Product added to your shopping cart!');
-        }
+        $cartProduct = $cart->products()->firstOrCreate(
+            ['product_id' => $product->id],
+            ['quantity' => 0, 'price' => $product->price]
+        );
+
+        $cartProduct->quantity += 1;
+        $cartProduct->save();
+
+        return redirect()->back()->with('success', 'Product updated in your shopping cart!');
     }
 
     public function removeOneFromCart(Product $product)
@@ -67,6 +67,7 @@ class CartController extends Controller
             $cartProduct->delete();
             return redirect()->back()->with('success', 'All of this product has been removed from your shopping cart!');
         }
+
         return redirect()->back()->withErrors(['error' => 'Product not found in your cart!']);
     }
 
@@ -76,6 +77,6 @@ class CartController extends Controller
         $cart = $user->cart();
         $cart->products()->delete();
 
-        return redirect()->back()->with('success', 'All products have been removed from your shopping cart!');
+        return redirect()->back()->with('success', 'Shopping cart cleared!');
     }
 }

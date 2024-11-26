@@ -19,7 +19,6 @@
     <div class="mt-5 d-flex justify-content-center">
         <form action="{{ route('products.byFilter') }}" method="GET" class="w-75">
             @csrf
-
             @if(!empty($category))
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
             @endif
@@ -72,7 +71,6 @@
                                 <p class="card-text">
                                     {{ Str::limit($product->description, 75) }}
                                 </p>
-
                                 <div class="stars d-flex align-items-center">
                                     Users rated it
                                     <div class="ms-3">
@@ -81,7 +79,6 @@
                                         @endfor
                                     </div>
                                 </div>
-
                                 <p class="card-text mt-3">
                                     <small class="text-body-secondary">
                                         Last updated {{ $product->updated_at->diffForHumans() }}
