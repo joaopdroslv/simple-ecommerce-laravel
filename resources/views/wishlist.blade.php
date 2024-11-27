@@ -11,6 +11,12 @@
     </h1>
     <hr class="mt-4">
 
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
+    @elseif (session()->has('error'))
+        <div class="alert alert-danger mb-5 mt-5">{{ session()->get('error') }}</div>
+    @endif
+
     @if (!$wishlistItems->isEmpty())
         <div class="mt-4 d-flex justify-content-end">
             <form action="{{ route('wishlists.clear') }}" method="POST">
@@ -78,7 +84,7 @@
         </div>
     @else
         <div class="alert alert-warning mt-5">
-            Your wishlist is empty, try adding something! <a href="{{ route('products.getAll') }}">go to products</a>
+            Your wish list is empty, try adding something! <a href="{{ route('products.getAll') }}">go to products</a>
         </div>
     @endif
 </div>

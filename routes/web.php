@@ -42,10 +42,10 @@ Route::post('/shopping-cart/remove-one/{product}', [CartController::class, 'remo
 Route::post('/shopping-cart/remove-all/{product}', [CartController::class, 'removeAllFromCart'])->name('carts.removeAll');
 Route::post('/shopping-cart/clear', [CartController::class, 'clearCart'])->name('carts.clear');
 
-Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlists.index');
-Route::post('/wishlist/{product}/store', [WishlistController::class, 'store'])->name('wishlists.store');
-Route::delete('/wishlist/{wishlist}/destroy', [WishlistController::class, 'destroy'])->name('wishlists.destroy');
-Route::post('/wishlist/clear', [WishlistController::class, 'clear'])->name('wishlists.clear');
+Route::get('/wishlists', [WishlistController::class, 'index'])->name('wishlists.index');
+Route::post('/wishlists/{product}/store', [WishlistController::class, 'store'])->name('wishlists.store');
+Route::delete('/wishlists/{wishlist}/destroy', [WishlistController::class, 'destroy'])->name('wishlists.destroy');
+Route::post('/wishlists/clear', [WishlistController::class, 'clear'])->name('wishlists.clear');
 
 Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
 

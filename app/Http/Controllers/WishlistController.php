@@ -22,7 +22,7 @@ class WishlistController extends Controller
         $user = auth()->user();
 
         if (!$product) {
-            return redirect()->back()->withErrors('Product not found!');
+            return redirect()->back()->with('error', 'Product not found!');
         }
 
         $wishlistProduct = Wishlist::where('user_id', $user->id)
@@ -30,7 +30,7 @@ class WishlistController extends Controller
             ->first();
 
         if ($wishlistProduct) {
-            return redirect()->back()->withErrors(['error' => 'Product is already on your wishlist!']);
+            return redirect()->back()->with('error', 'Product is already on your wish list!');
         }
 
         Wishlist::create([
@@ -38,14 +38,14 @@ class WishlistController extends Controller
             'product_id' => $product->id,
         ]);
 
-        return redirect()->back()->with('success', 'Product added to wishlist!');
+        return redirect()->back()->with('success', 'Product added to your wish list!');
     }
 
     public function destroy(Wishlist $wishlist)
     {
         $wishlist->delete();
 
-        return redirect()->route('wishlist.index');
+        return redirect()->route('wishlists.index')->with('success', 'Product removed from your wish list!');
     }
 
     public function clear()
@@ -54,6 +54,6 @@ class WishlistController extends Controller
 
         Wishlist::where('user_id', $user->id)->delete();
 
-        return redirect()->back()->with('success', 'Wishlist cleared!');
+        return redirect()->route('wishlists.index')->with('success', 'Wish list cleared!');
     }
 }
