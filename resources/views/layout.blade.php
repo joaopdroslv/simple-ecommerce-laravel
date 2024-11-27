@@ -47,29 +47,20 @@
                         <a class="nav-link active fs-5" aria-current="page" href="{{ route('aboutUs') }}">about
                             us</a>
                     </li>
-
-
                 </ul>
             </div>
 
             {{-- Change this to policy and middleware --}}
             <ul class="navbar-nav ms-auto">
                 @guest
-
                     <li class="nav-item">
                         <a class="nav-link fs-5" href="{{ route('login.index') }}">login</a>
                     </li>
-
                 @endguest
-
                 @auth
                     @if (Auth::user()->user_type === 'customer')
-
                         <li class="nav-item">
                             <a class="nav-link fs-5" href="{{ route('carts.showCart') }}">my shopping cart</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" href="{{ route('wishlist.index') }}">my wish list</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown"
@@ -77,8 +68,11 @@
                                 my account
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item fs-5" href="">my orders</a></li>
-                                <li><a class="dropdown-item fs-5" href="">my addresses</a></li>
+                                <li><a class="dropdown-item fs-5" href="{{ route('orders.list') }}">my orders</a></li>
+                                <li><a class="dropdown-item fs-5" href="{{ route('addresses.index') }}">my addresses</a></li>
+                                <li>
+                                    <a class="dropdown-item fs-5" href="{{ route('wishlists.index') }}">my wish list</a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item fs-5" href=""
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -91,9 +85,7 @@
                                 </form>
                             </ul>
                         </li>
-
                     @elseif (Auth::user()->user_type === 'admin')
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -102,6 +94,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item fs-5" href="{{ route(name: 'dashboard') }}">dashboard</a></li>
                                 <li><a class="dropdown-item fs-5" href="{{ route('products.index') }}">products</a></li>
+                                <li><a class="dropdown-item fs-5" href="{{ route('orders.index') }}">orders</a></li>
                                 <li><a class="dropdown-item fs-5" href="{{ route('users.index') }}">users</a></li>
                                 <li>
                                     <a class="dropdown-item fs-5" href=""
@@ -115,7 +108,6 @@
                                 </form>
                             </ul>
                         </li>
-
                     @endif
                 @endauth
             </ul>

@@ -9,9 +9,7 @@
         <i class="material-icons">list</i>
         Dashboard
     </h1>
-
     <hr class="mt-4">
-
     <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam doloremque repellendus
         rerum sint
         nesciunt, dolorum architecto dolor. Magnam temporibus iure id asperiores at quaerat perspiciatis consequuntur

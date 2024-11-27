@@ -15,10 +15,10 @@
     @endif
 
     <hr class="mt-4">
-
     <div class="mt-5 d-flex justify-content-center">
         <form action="{{ route('products.byFilter') }}" method="GET" class="w-75">
             @csrf
+
             @if(!empty($category))
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
             @endif
@@ -107,7 +107,6 @@
         @endforeach
     </div>
 </div>
-
 <div class="container mt-5 mb-5">
     {{--
     -> 'request()->query()' returns all parameters of the current request,

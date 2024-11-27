@@ -9,19 +9,12 @@ use App\Models\Cart;
 
 class ProductController extends Controller
 {
-    public readonly Product $product;
-
-    public function __construct()
-    {
-        $this->product = new Product();
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = $this->product->paginate(25);
+        $products = Product::paginate(25);
         return view('product/admin/products', ['products' => $products]);
     }
 
@@ -65,7 +58,7 @@ class ProductController extends Controller
             'category_id.exists' => 'The selected category does not exist.',
         ]);
 
-        $created = $this->product->create([
+        $created = Product::create([
             'name' => $request->input('name'),
             'brand' => $request->input('brand'),
             'description' => $request->input('description'),
@@ -74,10 +67,10 @@ class ProductController extends Controller
         ]);
 
         if ($created) {
-            return redirect()->back()->with('success', 'Succesfully created!');
+            return redirect()->route('products.index')->with('success', 'Succesfully created!');
         }
 
-        return redirect()->back()->with('error', 'Failed to create!');
+        return redirect()->route('products.index')->with('error', 'Failed to create!');
     }
 
     /**
@@ -129,23 +122,23 @@ class ProductController extends Controller
 
         $data = $request->except(['_token', '_method']);
 
-        $updated = $this->product->where('id', $id)->update($data);
+        $updated = Product::where('id', $id)->update($data);
 
         if ($updated) {
-            return redirect()->back()->with('success', 'Succesfully updated!');
+            return redirect()->route('products.index')->with('success', 'Succesfully updated!');
         }
 
-        return redirect()->back()->with('error', 'Failed to update!');
+        return redirect()->route('products.index')->with('error', 'Failed to update!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        $this->product->where('id', $id)->delete();
+        $product->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product deleted!');
     }
 
     public function getAll()

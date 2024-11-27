@@ -41,20 +41,11 @@ class WishlistController extends Controller
         return redirect()->back()->with('success', 'Product added to wishlist!');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Wishlist $wishlist)
     {
-        $user = auth()->user();
+        $wishlist->delete();
 
-        $wishlistProduct = Wishlist::where('user_id', $user->id)
-            ->where('product_id', $product->id)
-            ->first();
-
-        if ($wishlistProduct) {
-            $wishlistProduct->delete();
-            return redirect()->back()->with('success', 'Product removed from wishlist!');
-        }
-
-        return redirect()->back()->withErrors(['error' => 'Product not found in your wishlist!']);
+        return redirect()->route('wishlist.index');
     }
 
     public function clear()

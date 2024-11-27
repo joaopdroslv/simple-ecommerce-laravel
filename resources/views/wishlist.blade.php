@@ -13,11 +13,11 @@
 
     @if (!$wishlistItems->isEmpty())
         <div class="mt-4 d-flex justify-content-end">
-            <form action="{{ route('wishlist.clear') }}" method="POST">
+            <form action="{{ route('wishlists.clear') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-danger d-flex align-items-center justify-content-center">
                     <i class="material-icons me-2">delete</i>
-                    CLEAR MY WISH LIST
+                    Clear my wish list
                 </button>
             </form>
         </div>
@@ -57,14 +57,14 @@
                                             </h4>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-end">
-                                            <form
-                                                action="{{ route('wishlist.destroy', ['product' => $wishlistItem->product->id]) }}"
+                                            <form action="{{ route('wishlists.destroy', ['wishlist' => $wishlistItem->id]) }}"
                                                 method="POST">
                                                 @csrf
+                                                <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit"
                                                     class="btn btn-primary ms-2 d-flex align-items-center justify-content-center">
                                                     <i class="material-icons me-2">delete</i>
-                                                    remove from my wishlist
+                                                    Remove
                                                 </button>
                                             </form>
                                         </div>

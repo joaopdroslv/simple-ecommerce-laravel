@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +13,6 @@ class Cart extends Model
      */
     protected $fillable = [
         'user_id',
-        'is_active',
     ];
 
     // Relationship with User (a cart belongs to a user)
@@ -26,20 +22,20 @@ class Cart extends Model
     }
 
     // Relationship with CartItem (a cart has many items)
-    public function products()
+    public function cartProducts()
     {
         return $this->hasMany(CartProduct::class);
     }
 
     public function hasProduct(string $productId)
     {
-        $cartProduct = $this->products()->where('product_id', $productId)->first();
+        $cartProduct = $this->cartProducts()->where('product_id', $productId)->first();
         return $cartProduct ? $cartProduct->quantity : 0;
     }
 
     public function cartTotal()
     {
-        return $this->products()->get()->sum(function (CartProduct $item): float {
+        return $this->cartProducts()->get()->sum(function (CartProduct $item): float {
             return $item->price * $item->quantity;
         });
     }

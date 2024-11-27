@@ -9,8 +9,7 @@
         <i class="material-icons">info</i>
         About Us
     </h1>
-
-    <hr class="mt-4">
+    <hr class="mt-2">
 
     <h3 class="mt-4">Our principles</h3>
     <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, culpa molestias. Iste similique libero
@@ -38,9 +37,9 @@
         <i class="material-icons">info</i>
         Our history
     </h1>
-    <hr class="mt-4">
+    <hr class="mt-2">
 
-    <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam doloremque repellendus
+    <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam doloremque repellendus
         rerum sint
         nesciunt, dolorum architecto dolor. Magnam temporibus iure id asperiores at quaerat perspiciatis consequuntur
         culpa reprehenderit repellendus!

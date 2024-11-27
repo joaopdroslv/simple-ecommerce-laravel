@@ -7,19 +7,12 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public readonly User $user;
-
-    public function __construct()
-    {
-        $this->user = new User();
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = $this->user->paginate(25);
+        $users = User::paginate(25);
         return view('user/users', ['users' => $users]);
     }
 
@@ -54,7 +47,7 @@ class UserController extends Controller
             'password.confirmed' => 'Passwords do not match.'
         ]);
 
-        $created = $this->user->create([
+        $created = User::create([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'user_type' => $request->input('user_type'),
@@ -63,10 +56,10 @@ class UserController extends Controller
         ]);
 
         if ($created) {
-            return redirect()->back()->with('success', 'Succesfully created!');
+            return redirect()->route('users.index')->with('success', 'Succesfully created!');
         }
 
-        return redirect()->back()->with('error', 'Failed to create!');
+        return redirect()->route('users.index')->with('error', 'Failed to create!');
     }
 
     /**
@@ -79,13 +72,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
-    /* 
-     * Using model bind instead of
-     * public function edit(string $id)
-     * {
-     *  $user = $this->user->find($id);
-     * }
      */
     public function edit(User $user)
     {
@@ -102,7 +88,6 @@ class UserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users', 'email'],
             'user_type' => ['required'],
-            'password' => ['required', 'min:8', 'confirmed']
         ], [
             'first_name.required' => 'First name is required.',
             'last_name.required' => 'Last name is required.',
@@ -110,29 +95,26 @@ class UserController extends Controller
             'email.required' => 'E-mail is required.',
             'email.email' => 'E-mail is invalid.',
             'email.unique' => 'E-mail is already taken.',
-            'password.required' => 'Password is required.',
-            'password.min' => 'Password must have a minimum of :min characters!',
-            'password.confirmed' => 'Passwords do not match.'
         ]);
 
         $data = $request->except(['_token', '_method']);
 
-        $updated = $this->user->where('id', $id)->update($data);
+        $updated = User::where('id', $id)->update($data);
 
         if ($updated) {
-            return redirect()->back()->with('success', 'Succesfully updated!');
+            return redirect()->route('users.index')->with('success', 'Succesfully updated!');
         }
 
-        return redirect()->back()->with('error', 'Failed to update!');
+        return redirect()->route('users.index')->with('error', 'Failed to update!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $this->user->where('id', $id)->delete();
+        $user->delete();
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User deleted!');
     }
 }

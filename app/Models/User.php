@@ -50,9 +50,11 @@ class User extends Authenticatable
 
     public function cart()
     {
-        return Cart::firstOrCreate(
-            ['user_id' => $this->id, 'is_active' => true],
-            ['is_active' => true]
-        );
+        return Cart::firstOrCreate(['user_id' => $this->id]);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }

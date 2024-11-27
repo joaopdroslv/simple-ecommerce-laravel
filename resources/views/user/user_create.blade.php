@@ -10,13 +10,6 @@
         Create User
     </h2>
     <hr class="mt-3 mb-5">
-
-    @if (session()->has('success'))
-        <div class="alert alert-success mb-5">{{ session()->get('success') }}</div>
-    @elseif (session()->has('error'))
-        <div class="alert alert-danger mb-5">{{ session()->get('error') }}</div>
-    @endif
-
     <form action="{{ route('users.store') }}" method="POST">
         @csrf
         <div class="has-validation mb-3">

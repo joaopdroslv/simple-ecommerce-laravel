@@ -10,7 +10,6 @@
         User Details
     </h2>
     <hr class="mt-3 mb-5">
-
     <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
         @csrf
         <input type="hidden" name="_method" value="DELETE">

@@ -14,6 +14,10 @@
         </div>
     @endif
 
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-4 mt-4 fs-5">{{ session()->get('success') }}</div>
+    @endif
+
     @error('error')
         <div class="alert alert-danger mt-5 fs-5">{{ $message }}</div>
     @enderror
@@ -33,9 +37,11 @@
             <div class="stars mt-5 d-flex align-items-center">
                 Users rated it
                 <div class="ms-3">
+
                     @for ($i = 1; $i <= $product->averageRating(); $i++)
                         <i class="material-icons text-warning">star_rate</i>
                     @endfor
+
                 </div>
             </div>
             <h2 class="mt-5">${{ number_format($product->price, 2) }}</h2>
@@ -47,7 +53,7 @@
                         add to cart
                     </button>
                 </form>
-                <form action="{{ route('wishlist.store', ['product' => $product->id]) }}" method="POST"
+                <form action="{{ route('wishlists.store', ['product' => $product->id]) }}" method="POST"
                     class="d-inline">
                     @csrf
                     <button type="submit"
@@ -57,11 +63,6 @@
                     </button>
                 </form>
             </div>
-
-            @if (session()->has('success'))
-                <div class="alert alert-success mb-4 mt-4 fs-5">{{ session()->get('success') }}</div>
-            @endif
-
         </div>
         <div class="row mt-4 mb-5">
             <h2 class="mt-4">Specifications / Description</h2>
@@ -86,7 +87,6 @@
         <div class="row mt-4 mb-5">
             <h2 class="mt-4">Reviews</h2>
             <hr class="mt-4">
-
             <div class="row-md-12 mt-4 mb-5 card p-4">
                 <h2>Leave a review</h2>
                 <form action="{{ route('reviews.store') }}" method="POST">
@@ -96,9 +96,11 @@
                         <label for="rating" class="form-label">Rating</label>
                         <select name="rating" id="rating" class="form-select" required>
                             <option value="" disabled selected>Select rating</option>
+
                             @for ($i = 1; $i <= 5; $i++)
                                 <option value="{{ $i }}">{{ $i }} Star{{ $i > 1 ? 's' : '' }}</option>
                             @endfor
+
                         </select>
                     </div>
                     <div class="form-group mt-3">
@@ -111,7 +113,6 @@
                     </button>
                 </form>
             </div>
-
             <div class="mt-4">
                 @if (!$reviews)
                     <div class="alert alert-warning">Nobody made a review yet. Buy the product so you can be the first!

@@ -16,6 +16,13 @@
         </a>
     </div>
     <hr class="mt-3 mb-5">
+
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
+    @elseif (session()->has('error'))
+        <div class="alert alert-danger mb-5 mt-5">{{ session()->get('error') }}</div>
+    @endif
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -23,8 +30,6 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>E-mail</th>
-                <th>Created at</th>
-                <th>Updated at</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,8 +40,6 @@
                     <td>{{ $user->first_name }}</td>
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->created_at }}</td>
-                    <td>{{ $user->updated_at }}</td>
                     <td>
                         <a href="{{ route('users.show', ['user' => $user->id]) }}" class="btn btn-primary">
                             <i class="material-icons" style="margin-right: 4px; vertical-align: middle;">visibility</i>
@@ -51,7 +54,6 @@
             @endforeach
         </tbody>
     </table>
-
     <div class="container mt-5 mb-5">
         {{ $users->links('components/pagination') }}
     </div>

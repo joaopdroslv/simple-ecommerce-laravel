@@ -16,6 +16,13 @@
         </a>
     </div>
     <hr class="mt-3 mb-5">
+
+    @if (session()->has('success'))
+        <div class="alert alert-success mb-5 mt-5">{{ session()->get('success') }}</div>
+    @elseif (session()->has('error'))
+        <div class="alert alert-danger mb-5 mt-5">{{ session()->get('error') }}</div>
+    @endif
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -49,7 +56,6 @@
             @endforeach
         </tbody>
     </table>
-
     <div class="container mt-5 mb-5">
         {{ $products->links('components/pagination') }}
     </div>

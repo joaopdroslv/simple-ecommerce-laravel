@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
@@ -29,8 +31,9 @@ Route::get('/products/{product}/detail', [ProductController::class, 'detail'])->
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-Route::resource('admin/products', ProductController::class);
-Route::resource('admin/users', UserController::class);
+
+Route::resource('/admin/products', ProductController::class);
+Route::resource('/admin/users', UserController::class);
 
 # Customer access only routes
 Route::get('/shopping-cart', [CartController::class, 'showCart'])->name('carts.showCart');
@@ -39,9 +42,25 @@ Route::post('/shopping-cart/remove-one/{product}', [CartController::class, 'remo
 Route::post('/shopping-cart/remove-all/{product}', [CartController::class, 'removeAllFromCart'])->name('carts.removeAll');
 Route::post('/shopping-cart/clear', [CartController::class, 'clearCart'])->name('carts.clear');
 
-Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-Route::post('/wishlist/{product}', [WishlistController::class, 'store'])->name('wishlist.store');
-Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-Route::post('/wishlist/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlists.index');
+Route::post('/wishlist/{product}/store', [WishlistController::class, 'store'])->name('wishlists.store');
+Route::delete('/wishlist/{wishlist}/destroy', [WishlistController::class, 'destroy'])->name('wishlists.destroy');
+Route::post('/wishlist/clear', [WishlistController::class, 'clear'])->name('wishlists.clear');
 
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
+
+Route::get('/address', [AddressController::class, 'index'])->name('addresses.index');
+Route::get('/address/create', [AddressController::class, 'create'])->name('addresses.create');
+Route::post('/address/store', [AddressController::class, 'store'])->name('addresses.store');
+Route::get('/address/{address}/show', [AddressController::class, 'show'])->name('addresses.show');
+Route::get('/address/{address}/edit', [AddressController::class, 'edit'])->name('addresses.edit');
+Route::put('/address/{address}/update', [AddressController::class, 'update'])->name('addresses.update');
+Route::delete('/address/{address}/destroy', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+# Customer routes
+Route::get('/orders', [OrderController::class, 'list'])->name('orders.list');
+Route::get('/orders/{order}/detail', [OrderController::class, 'detail'])->name('orders.detail');
+Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
+
+# Admin routes
+Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders.index');
