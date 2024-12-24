@@ -1,24 +1,24 @@
-# Resumo do Projeto
+# Project Summary
 
-Este é um sistema de e-commerce desenvolvido em Laravel, projetado para oferecer uma plataforma online onde usuários podem explorar produtos, realizar compras, avaliar itens e gerenciar seus pedidos. O sistema conta com duas áreas principais: uma para **clientes** e outra para **administradores**.
+This is an e-commerce system developed in Laravel, designed to provide an online platform where users can browse products, make purchases, review items, and manage their orders. The system has two main areas: one for **customers** and another for **administrators**.
 
-## Funcionalidades Principais
+## Key Features
 
-- **Área de Clientes**:  
-  Os clientes podem navegar por produtos, visualizar detalhes, adicionar itens ao carrinho de compras, comprar produtos, gerenciar listas de desejos e adicionar avaliações para os produtos. Eles também podem gerenciar seus endereços de entrega e visualizar seus pedidos.
+- **Customer Area**:  
+  Customers can browse products, view details, add items to their shopping cart, purchase products, manage wishlists, and leave reviews for products. They can also manage their delivery addresses and view their orders.
 
-- **Área Administrativa**:  
-  Apenas os administradores têm acesso à área administrativa, onde podem gerenciar produtos (criar, editar, excluir) e usuários (adicionar, editar, excluir). Eles também podem visualizar todos os pedidos feitos na plataforma e realizar a gestão de dados.
+- **Admin Area**:  
+  Only administrators have access to the admin area, where they can manage products (create, edit, delete) and users (add, edit, delete). They can also view all orders placed on the platform and manage data.
 
-## Recursos Adicionais
+## Additional Features
 
-- **Autenticação**:  
-  O sistema inclui páginas de login e registro de usuários, com funcionalidade de logout para garantir que o acesso seja seguro.
+- **Authentication**:  
+  The system includes user login and registration pages, with a logout function to ensure secure access.
 
-- **Carrinho de Compras e Checkout**:  
-  O sistema permite que os clientes adicionem produtos ao carrinho, modifiquem as quantidades e finalizem a compra através do checkout.
+- **Shopping Cart and Checkout**:  
+  The system allows customers to add products to their cart, modify quantities, and complete the purchase through checkout.
 
-- **Avaliações e Comentários**:  
-  Os clientes podem deixar avaliações sobre os produtos adquiridos, ajudando outros usuários a tomar decisões informadas.
+- **Reviews and Comments**:  
+  Customers can leave reviews for purchased products, helping other users make informed decisions.
 
-Este projeto visa fornecer uma experiência completa de compras online, com ferramentas tanto para o gerenciamento de produtos e usuários, quanto para facilitar a compra e navegação para o cliente final.
+This project aims to provide a complete online shopping experience, with tools for both product and user management, as well as a seamless shopping experience for the end customer.
